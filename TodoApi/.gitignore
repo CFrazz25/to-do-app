@@ -1,0 +1,86 @@
+# Directories #
+/bin/
+/obj/
+/packages/
+/.vs/
+/.vscode/
+/test-results/
+/build/
+Backup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+
+# Files #
+*.user
+*.userprefs
+*.suo
+*.userosscache
+*.sln.docstates
+*.cache
+*.csproj.user
+*.vbproj.user
+*.tmp
+*.TMP
+*.vshost.*
+*.vshost.exe.manifest
+*.vshost.exe.config
+*.nupkg
+*.[Cc]ache
+*.bak
+*.swp
+*~.nib
+*.log
+*.DS_Store
+*.pidb
+*.scc
+*.vsp
+*.vspx
+*.sap
+
+# Rider #
+.idea/
+
+# User-specific files #
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files #
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Others
+*.mdf
+*.ldf
+*.ndf
+
+# Exclude .NET Core SDKs and runtimes
+.dotnet/
+global.json
