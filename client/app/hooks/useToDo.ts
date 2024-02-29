@@ -1,6 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import * as apiService from '@/app/services/toDoApi';
-import { ToDo, ToDoSearchParams, ToDoStats } from '@/app/lib/definitions';
+import { Task, ToDo, ToDoSearchParams, ToDoStats } from '@/app/lib/definitions';
+
+export type actions = "update" | "delete" | "create" | "add sub task"
+
+export const TableActionsContext = createContext({
+  handleDelete: (id: string) => { },
+  handleEdit: (task: Task) => { },
+  handleAddSubTask: (id: string) => { },
+  handleCreate: () => { },
+});
 
 function useToDo(searchParams: ToDoSearchParams) {
   const [todos, setTodos] = useState<ToDo[]>([]);

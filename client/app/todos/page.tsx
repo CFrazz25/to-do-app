@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import Search from '@/app/ui/search';
-import Table from '@/app/ui/todos/table';
-import { ToDosTableSkeleton } from '@/app/ui/skeletons';
+import Search from '@/app/components/ui/search';
+import Table from '@/app/components/ui/todos/table';
+import { ToDosTableSkeleton } from '@/app/components/ui/skeletons';
 import { Suspense, useState } from 'react';
-import ActionModal from '@/app/ui/todos/action-modal';
+import ActionModal from '@/app/components/ui/todos/action-modal';
 import { Button } from 'rsuite';
 import useToDo from '@/app/hooks/useToDo';
 import { ToDo, ToDoSearchParams } from '@/app/lib/definitions';
@@ -73,6 +73,7 @@ export default function Page({
         <Search placeholder="Search tasks..." setParams={setParams} />
         <Button appearance="primary"
           onClick={() => setOpen(true)}
+          className='rounded-lg bg-blue-500 text-white font-bold text-lg px-4 py-2 hover:bg-blue-600 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
         >
           Add Task
         </Button>

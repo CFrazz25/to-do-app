@@ -43,7 +43,7 @@ export const deleteToDo = async (id: string) => {
     if (!response.ok) {
       throw new Error('Network response was not ok'); // update error handling
     }
-    return response.json();
+    return
   } catch (err: any) {
     console.error(err.message);
   }

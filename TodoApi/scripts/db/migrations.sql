@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS tasks.todos
     parent_todo_id UUID,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC') NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC') NOT NULL,
-    FOREIGN KEY (parent_todo_id) REFERENCES tasks.todos(uuid)
+    FOREIGN KEY (parent_todo_id) REFERENCES tasks.todos(id)
 );
 
 -- seed some data. this doesn't have any subtasks yet, we can manually add them later

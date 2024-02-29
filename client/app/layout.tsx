@@ -1,6 +1,5 @@
-import '@/app/ui/global.css';
-import { inter } from '@/app/ui/fonts';
-import 'rsuite/dist/rsuite-no-reset.min.css';
+import '@/app/styles/global.css';
+import { inter } from '@/app/components/ui/fonts';
 
 export default function RootLayout({
   children,
