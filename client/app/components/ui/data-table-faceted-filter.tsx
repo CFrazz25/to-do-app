@@ -3,8 +3,8 @@ import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons"
 import { Column } from "@tanstack/react-table"
 
 import { cn } from "@/app/lib/utils"
-import { Badge } from "@/app/registry/new-york/ui/badge"
-import { Button } from "@/app/registry/new-york/ui/button"
+import { Badge } from "@/app/components/ui/badge"
+import { Button } from "@/app/components/ui/button"
 import {
   Command,
   CommandEmpty,
@@ -13,13 +13,13 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/app/registry/new-york/ui/command"
+} from "@/app/components/ui/command"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/app/registry/new-york/ui/popover"
-import { Separator } from "@/app/registry/new-york/ui/separator"
+} from "@/app/components/ui/popover"
+import { Separator } from "@/app/components/ui/separator"
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>

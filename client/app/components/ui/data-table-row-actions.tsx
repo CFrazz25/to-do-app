@@ -3,7 +3,7 @@
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
 import { deleteToDo } from "@/app/services/toDoApi"
-import { Button } from "@/app/registry/new-york/ui/button"
+import { Button } from "@/app/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/app/registry/new-york/ui/dropdown-menu"
+} from "@/app/components/ui/dropdown-menu"
 
 import { labels } from "@/app/lib/data"
 import { taskSchema } from "@/app/lib/definitions"
@@ -71,8 +71,11 @@ export function DataTableRowActions<TData>({
         </DropdownMenuSub> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem className="hover:bg-gray-200 hover:cursor-pointer"
-            onClick={() => handleDelete(row.original.id)}
-          // onClick={() => console.log(row)}
+            onClick={() => {
+              const task = taskSchema.parse(row.original)
+              handleDelete(task.id)
+            }}
+
           >
             Delete
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

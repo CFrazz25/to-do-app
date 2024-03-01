@@ -1,9 +1,4 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/app/registry/new-york/ui/avatar"
-import { Button } from "@/app/registry/new-york/ui/button"
+import { Button } from "@/app/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,17 +8,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/app/registry/new-york/ui/dropdown-menu"
+} from "@/app/components/ui/dropdown-menu"
 
 export function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-9 w-9">
+          {/* <Avatar className="h-9 w-9">
             <AvatarImage src="/avatars/03.png" alt="@shadcn" />
             <AvatarFallback>SC</AvatarFallback>
-          </Avatar>
+          </Avatar> */}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>

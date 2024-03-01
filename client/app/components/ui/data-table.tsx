@@ -25,7 +25,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/app/registry/new-york/ui/table"
+} from "@/app/components/ui/table"
 import { columns } from "@/app/components/ui/columns"
 import { DataTablePagination } from "@/app/components/ui/data-table-pagination"
 import { DataTableToolbar } from "@/app/components/ui/data-table-toolbar"

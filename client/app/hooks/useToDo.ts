@@ -7,8 +7,8 @@ export type actions = "update" | "delete" | "create" | "add sub task"
 export const TableActionsContext = createContext({
   handleDelete: (id: string) => { },
   handleEdit: (task: Task) => { },
-  handleAddSubTask: (id: string) => { },
-  handleCreate: () => { },
+  // handleAddSubTask: (id: string) => { },
+  // handleCreate: () => { },
 });
 
 function useToDo(searchParams: ToDoSearchParams) {

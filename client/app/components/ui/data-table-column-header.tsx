@@ -7,14 +7,14 @@ import {
 import { Column } from "@tanstack/react-table"
 
 import { cn } from "@/app/lib/utils"
-import { Button } from "@/app/registry/new-york/ui/button"
+import { Button } from "@/app/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/app/registry/new-york/ui/dropdown-menu"
+} from "@/app/components/ui/dropdown-menu"
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {

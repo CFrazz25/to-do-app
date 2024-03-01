@@ -3,8 +3,8 @@
 import { Cross2Icon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
 
-import { Button } from "@/app/registry/new-york/ui/button"
-import { Input } from "@/app/registry/new-york/ui/input"
+import { Button } from "@/app/components/ui/button"
+import { Input } from "@/app/components/ui/input"
 import { DataTableViewOptions } from "@/app/components/ui/data-table-view-options"
 
 import { priorities, statuses } from "@/app/lib/data"
