@@ -1,14 +1,15 @@
 import { useState, useEffect, createContext } from 'react';
 import * as apiService from '@/app/services/toDoApi';
 import { Task, ToDo, ToDoSearchParams, ToDoStats } from '@/app/lib/definitions';
+import { error } from 'console';
 
 export type actions = "update" | "delete" | "create" | "add sub task"
 
 export const TableActionsContext = createContext({
-  handleDelete: (id: string) => { },
+  handleDelete: async (id: string) => { },
   handleEdit: (task: Task) => { },
-  // handleAddSubTask: (id: string) => { },
-  // handleCreate: () => { },
+  handleCreate: (task: Task) => { },
+  error: null
 });
 
 function useToDo(searchParams: ToDoSearchParams) {
@@ -60,6 +61,7 @@ function useToDo(searchParams: ToDoSearchParams) {
       // just in case of errors. it does however save a network request
     } catch (err: any) {
       setError(err.message);
+      throw new Error(err.message);
     }
   };
 

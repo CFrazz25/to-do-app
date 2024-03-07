@@ -20,6 +20,7 @@ import {
 
 import { labels } from "@/app/lib/data"
 import { taskSchema } from "@/app/lib/definitions"
+import { Task } from "@/app/lib/definitions"
 import { useContext, useState } from "react"
 import { TableActionsContext } from "@/app/hooks/useToDo"
 import { TaskFormModal } from "@/app/components/ui/task-form-modal"
@@ -32,14 +33,16 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   // const task = taskSchema.parse(row.original)
-  const { handleDelete } = useContext(TableActionsContext);
+  const { handleDelete, error } = useContext(TableActionsContext);
   const [open, setOpen] = useState(false)
+  const [action, setAction] = useState<"create" | "update" | "add subtask" | null>(null)
   const handleClose = () => setOpen(false)
-  const props = { open, handleClose }
+
 
   return (
     <div>
-      <TaskFormModal props={props} />
+      {/* <TaskFormModal props={props} /> */}
+      <TaskFormModal props={{ action, open, handleClose, task: row.original as Task }} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -52,11 +55,27 @@ export function DataTableRowActions<TData>({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px] bg-white">
           <DropdownMenuItem className="hover:bg-gray-200 hover:cursor-pointer"
-            onClick={() => setOpen(true)}
-          >Edit</DropdownMenuItem>
+            onSelect={() => {
+              setOpen(true)
+              setAction("update")
+              console.log("row", row)
+            }}
+          >
+            Edit
+
+          </DropdownMenuItem>
+
+
+          {/* <div className="hover:bg-gray-200 hover:cursor-pointer flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent">
+            <TaskFormModal props={{ action: "update" }} />
+          </div> */}
+
+
           {/* <DropdownMenuItem>Make a copy</DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem> */}
+
           <DropdownMenuSeparator />
+
           {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
@@ -71,22 +90,70 @@ export function DataTableRowActions<TData>({
         </DropdownMenuSub> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem className="hover:bg-gray-200 hover:cursor-pointer"
-            onClick={() => {
-              const task = taskSchema.parse(row.original)
-              handleDelete(task.id)
+            onClick={async () => {
+              try {
+                const task = taskSchema.parse(row.original)
+                await handleDelete(task.id)
+                toast.success("Task Deleted")
+              } catch (error) {
+                toast.error("Error Deleting Task", { description: error.message, duration: 5000 })
+              }
             }}
+
 
           >
             Delete
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="hover:bg-gray-200 hover:cursor-pointer">
+          <DropdownMenuItem className="hover:bg-gray-200 hover:cursor-pointer"
+            onSelect={() => {
+              setOpen(true)
+              setAction("add subtask")
+            }}
+          >
             Add Sub Task
             <DropdownMenuShortcut>+</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
+  )
+}
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/components/ui/alert-dialog"
+import { toast } from "sonner"
+// import { Button } from "@/app/components/ui/button"
+
+export function AlertDialogDemo() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="outline">Show Dialog</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction>Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }

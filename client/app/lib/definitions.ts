@@ -31,7 +31,7 @@ export type ToDoSearchParams = {
 export const taskSchema = z.object({
   id: z.string(),
   task: z.string(),
-  moreDetails: z.string(),
+  moreDetails: z.string().nullable(),
   deadlineDate: z.string(),
   isComplete: z.boolean(),
   parentToDoId: z.string().nullable(),

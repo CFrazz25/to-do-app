@@ -4,14 +4,30 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { Badge } from "@/app/components/ui/badge"
 // import { Checkbox } from "@/app/components/ui/checkbox"
-
+import { PlusIcon, MinusIcon, ZoomInIcon, ZoomOutIcon } from "@radix-ui/react-icons"
 import { labels, priorities, statuses } from "@/app/lib/data"
 import { Task } from "@/app/lib/definitions"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
-import { formatDateToLocal } from "@/app/lib/utils"
+import { formatDateToLocal, isPastDue } from "@/app/lib/utils"
+import PastDueAlertSVG from "../svg/past-due-alert"
+import { Button } from "@/app/components/ui/button"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipArrow
+} from "@/app/components/ui/tooltip"
+import { toast } from "sonner"
 
-function isChildRow(row) {
+import { styled } from '@stitches/react';
+import { useContext, useState } from "react"
+import { set } from "date-fns"
+import { Checkbox } from "./checkbox"
+import { TableActionsContext } from "@/app/hooks/useToDo"
+
+function isChildRow(row: any) {
   // Check if the row has a parent or its depth is greater than 0
   return row.depth > 0 || row.parent !== undefined;
 }
@@ -59,18 +75,16 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="Task" />
     ),
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label)
-
+      const [view, setView] = useState(false)
+      const isComplete = row.getValue("isComplete")
       return (
         <div className="flex space-x-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
-          {/* <span className="max-w-[500px] truncate font-medium"> */}
-          <span className={`max-w-[300px] truncate font-medium ${isChildRow(row) ? 'ml-8' : ''}`}>
+          <span className={`max-w-[300px] ${isComplete ? 'line-through' : ''}  ${view ? 'cursor-zoom-out' : 'truncate cursor-zoom-in'} font-medium ${isChildRow(row) ? 'ml-8' : ''}`}
+            onClick={() => setView(!view)}
+          >
             {row.getCanExpand() && (
               <button onClick={row.getToggleExpandedHandler()} className="pr-2 rounded-md">
-                {/* {row.getIsExpanded() ? "-" : "+"} */}
-                {row.getIsExpanded() ? '👇' : '👉'}
-
+                {row.getIsExpanded() ? <MinusIcon className="font-black" /> : <PlusIcon className="font-black" />}
               </button>
             )}
             {row.getValue("task")}
@@ -85,12 +99,14 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="More Details" />
     ),
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label)
-
+      const [view, setView] = useState(false)
+      const isComplete = row.getValue("isComplete")
       return (
         <div className="flex space-x-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
-          <span className="max-w-[300px] truncate font-medium">
+
+          <span className={`max-w-[300px] font-medium ${isComplete ? 'line-through' : ''} ${view ? 'cursor-zoom-out' : 'truncate cursor-zoom-in'}`}
+            onClick={() => setView(!view)}
+          >
             {row.getValue("moreDetails")}
           </span>
         </div>
@@ -105,12 +121,35 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
-            {formatDateToLocal(row.getValue("deadlineDate"))}
-          </span>
+        <div >
+          {
+            isPastDue(row.original) ? (
+              <TooltipProvider delayDuration={100}>
+                <Tooltip >
+                  <TooltipTrigger asChild>
+                    <div className="flex space-x-2">
+                      <span className="max-w-[500px] font-medium">
+                        {formatDateToLocal(row.getValue("deadlineDate"))}
+                      </span>
+                      <PastDueAlertSVG />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="bg-black rounded-md text-white">
+                    <TooltipArrow />
+                    <p>Past Deadline!!! Complete the task or update the deadline date</p>
+
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ) : (
+              <div className="flex space-x-2">
+                <span className="max-w-[500px] font-medium">
+                  {formatDateToLocal(row.getValue("deadlineDate"))}
+                </span>
+              </div>
+            )}
         </div>
-      )
+      );
     },
   },
 
@@ -119,13 +158,49 @@ export const columns: ColumnDef<Task>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Is Complete" />
     ),
+    filterFn: 'equals',
     cell: ({ row }) => {
-      // const label = labels.find((label) => label.value === row.original.label)
-      const isComplete = row.getValue("isComplete")
+      const [quickEdit, setQuickEdit] = useState(false)
+
+      const isComplete = row.getValue("isComplete") as boolean
+      const [complete, setComplete] = useState(isComplete)
+      const { handleEdit } = useContext(TableActionsContext);
       return (
-        <div className="flex items-center">
-          {/* {label && <Badge variant="outline">{label.label}</Badge>} */}
-          <span>{isComplete ? "✅" : "❌"}</span>
+        <div>
+          {!quickEdit ? (
+            <div className="flex items-center">
+              <span>{isComplete ? "✅" : "❌"}</span>
+              <Button variant="link" onClick={() => setQuickEdit(!quickEdit)} size="sm" className="text-sky-400 text-xs">
+                Quick Edit
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center">
+              <Checkbox checked={complete} onCheckedChange={() => {
+                setComplete(!complete)
+              }} />
+              <span className="text-sky-400 text-xs ml-2 hover:underline hover:cursor-pointer"
+                onClick={() => {
+                  setQuickEdit(!quickEdit)
+                  handleEdit({ ...row.original, isComplete: complete })
+
+                  const toastDescription = complete ? "Congratulations! You've completed a task!" : ""
+                  toast.success("Task Updated", {
+                    description: toastDescription,
+                  })
+                }}
+              >
+                Save
+              </span>
+              <span className="text-sky-400 text-xs ml-2 hover:underline hover:cursor-pointer"
+                onClick={() => {
+                  setQuickEdit(!quickEdit)
+                }}
+              >
+                Cancel
+              </span>
+            </div>
+          )}
         </div>
       )
 
