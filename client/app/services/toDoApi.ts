@@ -1,5 +1,4 @@
 import { ToDo, ToDoSearchParams } from '@/app/lib/definitions';
-import { th } from 'date-fns/locale';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchToDos = async (searchParams: ToDoSearchParams) => {
@@ -42,11 +41,9 @@ export const deleteToDo = async (id: string) => {
       method: 'DELETE',
     });
     if (!response.ok) {
-      // const message = await response.json();
       console.log(response)
       throw new Error(await response.text()); // update error handling
     }
-    console.log("ewwwwww")
     return
   } catch (err: any) {
     console.error(err.message);

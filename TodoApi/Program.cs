@@ -24,6 +24,10 @@ builder.Services.AddScoped<TodoService>(serviceProvider =>
 {
   var configuration = serviceProvider.GetRequiredService<IConfiguration>();
   var connectionString = configuration.GetConnectionString("DefaultConnection");
+  if (connectionString is null)
+  {
+    throw new ArgumentNullException(nameof(connectionString));
+  }
   return new TodoService(connectionString);
 });
 

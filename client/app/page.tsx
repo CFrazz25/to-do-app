@@ -34,12 +34,20 @@ export default function Page() {
           <p className={`${lusitana.className} text-xl text-gray-800 md:text-2xl md:leading-normal `}>
             <strong>Welcome to Frazzle Dazzle&apos;s To Do app.</strong> This is the the best place to keep track of your tasks and get things done.
           </p>
+          <Image
+            src="/frazzledazzletodolistlogov2.png"
+            width={150}
+            height={50}
+            alt="logo"
+            className="hidden dark:block"
+          />
           <Link
-            href="/todos"
+            href="/tasks"
             className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
           >
-            <span>Check It Out</span> <ArrowRightIcon className="w-5 md:w-6" />
+            <span>Check out our v2 version just released!</span> <ArrowRightIcon className="w-5 md:w-6" />
           </Link>
+
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
           <Image

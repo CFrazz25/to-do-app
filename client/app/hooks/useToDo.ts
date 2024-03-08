@@ -1,7 +1,6 @@
 import { useState, useEffect, createContext } from 'react';
 import * as apiService from '@/app/services/toDoApi';
 import { Task, ToDo, ToDoSearchParams, ToDoStats } from '@/app/lib/definitions';
-import { error } from 'console';
 
 export type actions = "update" | "delete" | "create" | "add sub task"
 

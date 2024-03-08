@@ -261,19 +261,31 @@ namespace ToDoApi.Services
 
     public async Task DeleteTodoAsync(string id)
     {
-      using var connection = new NpgsqlConnection(_connectionString);
-      await connection.OpenAsync();
-      const string sqlQuery = "DELETE FROM tasks.todos WHERE id = @id";
-      using var command = new NpgsqlCommand(sqlQuery, connection);
-
-      // Explicitly specify the parameter type as UUID
-      var idParam = new NpgsqlParameter("id", NpgsqlTypes.NpgsqlDbType.Uuid)
+      try
       {
-        Value = Guid.Parse(id) // Convert the string ID to a Guid
-      };
-      command.Parameters.Add(idParam);
+        using var connection = new NpgsqlConnection(_connectionString);
+        await connection.OpenAsync();
+        const string sqlQuery = "DELETE FROM tasks.todos WHERE id = @id";
+        using var command = new NpgsqlCommand(sqlQuery, connection);
 
-      await command.ExecuteNonQueryAsync();
+        // Explicitly specify the parameter type as UUID
+        var idParam = new NpgsqlParameter("id", NpgsqlTypes.NpgsqlDbType.Uuid)
+        {
+          Value = Guid.Parse(id) // Convert the string ID to a Guid
+        };
+        command.Parameters.Add(idParam);
+
+        await command.ExecuteNonQueryAsync();
+      }
+      catch (Exception ex)
+      {
+        const string message = "update or delete on table \"todos\" violates foreign key constraint \"todos_parent_todo_id_fkey\" on table \"todos\"";
+        if (ex.Message.Contains(message))
+        {
+          throw new Exception("The task has subtasks. Please delete the subtasks first.");
+        }
+        throw new Exception(ex.Message);
+      }
     }
 
   }

@@ -23,20 +23,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/app/components/ui/popover"
-// import { toast } from "@/app/components/ui/use-toast"
 import { toast } from "sonner"
 
 import { useContext } from "react"
 import { TableActionsContext } from "@/app/hooks/useToDo"
-import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
 import { Task } from "@/app/lib/definitions"
-import { Checkbox } from "./checkbox"
 
 const TaskFormSchema = z.object({
   id: z.string().optional().nullable(),
   task: z.string().min(1, "A task is required."),
   deadlineDate: z.date({
-    required_error: "A deadline date is required.", // Ensuring the date is provided
+    required_error: "A deadline date is required.",
   }),
   isComplete: z.boolean(),
   moreDetails: z.string().optional().nullable(),
@@ -49,13 +46,8 @@ interface TaskFormProps {
   handleClose: () => void
 }
 
-
 export function TaskForm({ props }: { props: TaskFormProps }) {
   const { handleEdit, handleCreate } = useContext(TableActionsContext);
-  console.log("action", props.action)
-  // const form = useForm<z.infer<typeof TaskFormSchema>>({
-  //   resolver: zodResolver(TaskFormSchema),
-  // })
 
   const parentToDoId = () => {
     if (props.action === "add subtask" && props.task) {
@@ -79,25 +71,11 @@ export function TaskForm({ props }: { props: TaskFormProps }) {
 
   });
 
-  // function onSubmit(data: z.infer<typeof TaskFormSchema>) {
-  //   handleEdit(data)
-  //   // handleClose()
-
-  //   toast({
-  //     title: "You submitted the following values:",
-  //     description: (
-  //       <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-  //         <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-  //       </pre>
-  //     ),
-  //   })
-  // }
-
   function onSubmit(data: z.infer<typeof TaskFormSchema>) {
     if (props.action === "update") {
       handleEdit(data);
     } else {
-      handleCreate(data); // Assuming you have a similar function for creating tasks
+      handleCreate(data);
     }
     props.handleClose();
     const toastTitle = props.action === "update" ? "Task has been updated" : "Task has been created"
@@ -106,8 +84,6 @@ export function TaskForm({ props }: { props: TaskFormProps }) {
       description: toastDescription,
     })
   }
-
-
 
   return (
     <Form {...form}>
@@ -195,7 +171,6 @@ export function TaskForm({ props }: { props: TaskFormProps }) {
           />
         )}
 
-
         <FormField
           control={form.control}
           name="moreDetails"
@@ -213,9 +188,6 @@ export function TaskForm({ props }: { props: TaskFormProps }) {
           )}
         />
         <Button type="submit">Submit</Button>
-        {/* <AlertDialogCancel asChild>
-          <Button>Cancel </Button>
-        </AlertDialogCancel> */}
       </form>
     </Form>
   )

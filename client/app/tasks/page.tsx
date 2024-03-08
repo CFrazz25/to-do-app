@@ -1,38 +1,12 @@
-import { promises as fs } from "fs"
-import path from "path"
 import { Metadata } from "next"
 import Image from "next/image"
-import { z } from "zod"
-
-import { columns } from "@/app/components/ui/columns"
 import { DataTable } from "@/app/components/ui/data-table"
-import { UserNav } from "@/app/components/ui/user-nav"
-import { taskSchema } from "@/app/lib/definitions"
-
-
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Tasks",
-  description: "A task and issue tracker build using Tanstack Table.",
+  description: "Task management tool for your daily tasks.",
 }
-
-// Simulate a database read for tasks.
-// export async function getTasks({
-//   searchParams,
-// }: {
-//   searchParams?: {
-//     query?: string;
-//     page?: string;
-//   };
-// }) {
-//   const data = await fs.readFile(
-//     path.join(process.cwd(), "app/examples/tasks/data/tasks.json")
-//   )
-
-//   const tasks = JSON.parse(data.toString())
-
-//   return z.array(taskSchema).parse(tasks)
-// }
 
 export default async function TaskPage({
   searchParams,
@@ -42,38 +16,37 @@ export default async function TaskPage({
     page?: string;
   };
 }) {
-  // const tasks = await getTasks()
-
-
   return (
     <>
       <div className="md:hidden">
         <Image
-          src="/examples/tasks-light.png"
-          width={1280}
-          height={998}
-          alt="Playground"
-          className="block dark:hidden"
-        />
-        <Image
-          src="/examples/tasks-dark.png"
-          width={1280}
-          height={998}
-          alt="Playground"
+          src="/frazzledazzletodolistlogov2.png"
+          width={500}
+          height={500}
+          alt="logo"
           className="hidden dark:block"
         />
+        <h1 className="text-4xl font-bold tracking-tight mt-8">Mobile version coming soon!</h1>
       </div>
-      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+      <div className="hidden flex-1 flex-col space-y-2  md:flex">
         <div className="flex items-center justify-between space-y-2">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">Welcome back!</h2>
             <p className="text-muted-foreground">
-              Here&apos;s a list of your tasks for this month!
+              Here&apos;s a list of your tasks!
             </p>
+
           </div>
-          <div className="flex items-center space-x-2">
-            <UserNav />
-          </div>
+          <Link href="/">
+            <Image
+              src="/frazzledazzletodolistlogov2.png"
+              width={120}
+              height={120}
+              alt="Playground"
+              className="float-right"
+            />
+          </Link>
+
         </div>
         <DataTable />
       </div>

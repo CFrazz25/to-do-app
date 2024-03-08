@@ -84,3 +84,6 @@ ScaffoldingReadMe.txt
 # Exclude .NET Core SDKs and runtimes
 .dotnet/
 global.json
+
+# sensitive data
+appsettings.json

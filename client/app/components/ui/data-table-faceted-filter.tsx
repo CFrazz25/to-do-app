@@ -26,7 +26,7 @@ interface DataTableFacetedFilterProps<TData, TValue> {
   title?: string
   options: {
     label: string
-    value: string
+    value: any
     icon?: React.ComponentType<{ className?: string }>
   }[]
 }
@@ -80,7 +80,7 @@ export function DataTableFacetedFilter<TData, TValue>({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
+      <PopoverContent className="w-[200px] p-0 bg-white" align="start">
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
@@ -99,10 +99,10 @@ export function DataTableFacetedFilter<TData, TValue>({
                       }
                       const filterValues = Array.from(selectedValues)
                       column?.setFilterValue(
-                        // filterValues.length ? filterValues : undefined
-                        true
+                        filterValues.length ? filterValues : undefined
                       )
                     }}
+                    className="hover:bg-gray-200 hover:cursor-pointer"
                   >
                     <div
                       className={cn(

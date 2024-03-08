@@ -104,8 +104,15 @@ namespace TodoApi.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTodoAsync(string id)
     {
-      await _todoService.DeleteTodoAsync(id);
-      return Ok();
+      try
+      {
+        await _todoService.DeleteTodoAsync(id);
+        return Ok();
+      }
+      catch (System.Exception ex)
+      {
+        return BadRequest(ex.Message);
+      }
     }
   }
 }
