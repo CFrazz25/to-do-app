@@ -1,26 +1,18 @@
-import { Metadata } from "next"
+"use client"
+
 import Image from "next/image"
 import { DataTable } from "@/app/components/ui/data-table"
 import Link from "next/link";
-import DataViews from "../components/ui/tasks/data-views";
+import { useState } from "react";
+import CalendarView from "@/app/components/ui/calendar-view";
+import Toggle from "@/app/components/ui/toggle";
 
-export const metadata: Metadata = {
-  title: "Tasks",
-  description: "Task management tool for your daily tasks.",
-}
 
-export default async function TaskPage({
-  searchParams,
-}: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
-}) {
+export default function DataViews() {
+  const [viewCalendar, setViewCalendar] = useState(false);
   return (
     <>
-      <DataViews />
-      {/* <div className="md:hidden">
+      <div className="md:hidden">
         <Image
           src="/frazzledazzletodolistlogov2.png"
           width={500}
@@ -33,6 +25,7 @@ export default async function TaskPage({
       <div className="hidden flex-1 flex-col space-y-2  md:flex">
         <div className="flex items-center justify-between space-y-2">
           <div>
+            <Toggle enabled={viewCalendar} setEnabled={setViewCalendar} enabledString="Calendar View" disabledString="Table View" />
             <h2 className="text-2xl font-bold tracking-tight">Welcome back!</h2>
             <p className="text-muted-foreground">
               Here&apos;s a list of your tasks!
@@ -50,8 +43,13 @@ export default async function TaskPage({
           </Link>
 
         </div>
-        <DataTable />
-      </div> */}
+        {!viewCalendar && (
+          <DataTable />
+        )}
+        {viewCalendar && (
+          <CalendarView />
+        )}
+      </div>
     </>
   )
 }

@@ -8,7 +8,8 @@ export const TableActionsContext = createContext({
   handleDelete: async (id: string) => { },
   handleEdit: (task: Task) => { },
   handleCreate: (task: Task) => { },
-  error: null
+  error: null,
+  // fetchToDos: async (searchParams: ToDoSearchParams) => { },
 });
 
 function useToDo(searchParams: ToDoSearchParams) {
@@ -71,7 +72,7 @@ function useToDo(searchParams: ToDoSearchParams) {
   useEffect(() => {
     fetchToDos(searchParams);
 
-  }, [searchParams]);
+  }, []);
 
   return { refreshToDos, todos, loading, error, addToDo, updateToDo, deleteToDo, fetchToDos, stats };
 }

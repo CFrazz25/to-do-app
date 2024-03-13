@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss';
+import defaultTheme from 'tailwindcss/defaultTheme';
+// const defaultTheme = require('tailwindcss/defaultTheme')
 
 const config: Config = {
   content: [
@@ -25,6 +27,9 @@ const config: Config = {
           transform: 'translateX(100%)',
         },
       },
+    },
+    fontFamily: {
+      sans: ['Inter var', ...defaultTheme.fontFamily.sans],
     },
   },
   plugins: [require('@tailwindcss/forms')],

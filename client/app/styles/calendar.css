@@ -1,0 +1,97 @@
+.fc-button.fc-button-active {
+  background-color: #3949ab !important;
+
+}
+
+.fc-button {
+  background-color: #5b7bd6 !important;
+  color: white !important;
+  border-radius: 0.5rem !important;
+  margin: 0.1rem !important;
+}
+
+.fc-toolbar-title {
+  color: #4760c9 !important;
+  font-family: 'Inter var', sans-serif !important;
+}
+
+.fc-day-today {
+  background-color: white !important;
+  /* Example: a nice shade of indigo */
+}
+
+/* .fc-daygrid-day-number {
+  margin-right: 8rem;
+  margin-top: 0.1rem;
+  font-family: 'Inter var', sans-serif !important;
+} */
+
+.fc-daygrid-day-top {
+  justify-content: flex-start !important;
+  /* Aligns content to the left */
+}
+
+.fc-daygrid-day-number {
+  position: absolute !important;
+  top: 0 !important;
+  /* Aligns to the top of the cell */
+  left: 0 !important;
+  /* Aligns to the left of the cell */
+  margin-left: 4px !important;
+  /* Adds some space from the left edge */
+  margin-top: 2px !important;
+  /* Adds some space from the top edge */
+  font-family: 'Inter var', sans-serif !important;
+}
+
+.fc-day-today .fc-daygrid-day-number {
+  /* background-color: #3949ab !important;
+  height: 3vw;
+  width: 3vw;
+  color: white !important;
+  border-radius: 100%; */
+  display: flex;
+  /* flex */
+  height: 2rem;
+  /* h-6 (24px assuming 1rem = 16px) */
+  width: 2rem;
+  /* w-6 (24px assuming 1rem = 16px) */
+  align-items: center;
+  /* items-center */
+  justify-content: center;
+  /* justify-center */
+  border-radius: 9999px;
+  /* rounded-full */
+  background-color: #4f46e5;
+  /* bg-indigo-600, the exact color may vary based on the Tailwind version */
+  /* font-weight: 600; */
+  /* font-semibold */
+  color: white;
+  position: absolute !important;
+  top: 0 !important;
+  /* Aligns to the top of the cell */
+  left: 0 !important;
+  /* Aligns to the left of the cell */
+  margin-left: 4px !important;
+  /* Adds some space from the left edge */
+  margin-top: 2px !important;
+  /* Adds some space from the top edge */
+  font-family: 'Inter var', sans-serif !important;
+  /* text-white */
+}
+
+
+.fc-button:hover {
+  background-color: #4760c9 !important;
+  /* Darker indigo */
+}
+
+/* .fc-dayGridMonth-button.fc-button.fc-button-primary,
+.fc-timeGridWeek-button.fc-button.fc-button-primary,
+.fc-timeGridDay-button.fc-button.fc-button-primary {
+  background-color: rgb(108, 108, 248);
+  border-radius: 0.5rem;
+
+  padding: 0.5rem 1rem;
+
+} */

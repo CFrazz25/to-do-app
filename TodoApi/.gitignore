@@ -86,4 +86,4 @@ ScaffoldingReadMe.txt
 global.json
 
 # sensitive data
-appsettings.json
+# appsettings.json

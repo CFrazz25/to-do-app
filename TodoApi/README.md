@@ -18,6 +18,7 @@ docker run -p 5084:8080 todoapi
 
 
 gcloud builds submit --tag gcr.io/the-name-413502/todoapp
+
 gcloud run deploy todoapp --image gcr.io/the-name-413502/todoapp --platform managed --region us-central1 --allow-unauthenticated --add-cloudsql-instances=the-name-413502:us-central1:frazzle
 
 
